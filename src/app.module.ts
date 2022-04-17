@@ -9,6 +9,7 @@ import { AppService } from './app.service';
 import { DataAccessModule } from './data-access/data-access.module';
 import { UtilsModule } from './utils/utils.module';
 import { ProfileModule } from './profile/profile.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -20,6 +21,7 @@ import { ProfileModule } from './profile/profile.module';
       autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
     }),
     ProfileModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],
