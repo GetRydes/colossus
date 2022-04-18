@@ -3,6 +3,8 @@ import { ConfigService } from '@nestjs/config';
 import { TypeOrmOptionsFactory, TypeOrmModuleOptions } from '@nestjs/typeorm';
 import { join } from 'path';
 import { parse } from 'pg-connection-string';
+import { Connection, EntitySchema } from 'typeorm';
+import { Driver } from './entities/driver.entity';
 
 @Injectable()
 export class TypeOrmService implements TypeOrmOptionsFactory {
@@ -74,4 +76,15 @@ export class TypeOrmService implements TypeOrmOptionsFactory {
   envString = (prodString: any, devString: any) => {
     return process.env.NODE_ENV === 'production' ? prodString : devString;
   };
+}
+
+@Injectable()
+export class DataAccessService {
+  constructor(private connection: Connection) {}
+
+  async findAll(Entity: any) {
+    const repository = this.connection.getRepository(Entity);
+    const result = await repository.find();
+    return result;
+  }
 }

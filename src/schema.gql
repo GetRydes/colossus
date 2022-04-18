@@ -3,11 +3,13 @@
 # ------------------------------------------------------
 
 type Profile {
-  """Example field (placeholder)"""
-  exampleField: Int!
+  id: Int!
+  firstName: String!
+  email: String!
 }
 
 type Query {
+  profiles(id: Int, email: String): [Profile!]!
   profile(id: Int!): Profile!
 }
 
@@ -18,12 +20,18 @@ type Mutation {
 }
 
 input CreateProfileInput {
-  """Example field (placeholder)"""
-  exampleField: Int!
+  firstName: String!
+  lastName: String!
+  email: String!
+  password: String!
+  phoneNumber: String!
 }
 
 input UpdateProfileInput {
-  """Example field (placeholder)"""
-  exampleField: Int
+  firstName: String
+  lastName: String
+  email: String
+  password: String
+  phoneNumber: String
   id: Int!
 }

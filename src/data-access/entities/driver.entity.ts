@@ -17,12 +17,12 @@ export class Driver {
   id: number;
 
   @Column()
-  firstName: string;
+  first_name: string;
 
   @Column()
-  lastName: string;
+  last_name: string;
 
-  @Column()
+  @Column({ unique: true })
   email: string;
 
   @Column()
@@ -31,11 +31,8 @@ export class Driver {
   @Column()
   phone_number: string;
 
-  @Column()
-  is_active: boolean;
-
   @Column({ default: true })
-  isActive: boolean;
+  is_active: boolean;
 
   @OneToMany(() => Vehicle, (vehicle) => vehicle.driver)
   @JoinColumn()

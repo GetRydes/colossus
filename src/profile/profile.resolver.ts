@@ -1,6 +1,6 @@
 import { Resolver, Query, Mutation, Args, Int } from '@nestjs/graphql';
 import { ProfileService } from './profile.service';
-import { Profile } from './entities/profile.entity';
+import { Profile } from './models/profile.model';
 import { CreateProfileInput } from './dto/create-profile.input';
 import { UpdateProfileInput } from './dto/update-profile.input';
 
@@ -9,15 +9,18 @@ export class ProfileResolver {
   constructor(private readonly profileService: ProfileService) {}
 
   @Mutation(() => Profile)
-  createProfile(
+  async createProfile(
     @Args('createProfileInput') createProfileInput: CreateProfileInput,
-  ) {
-    return this.profileService.create(createProfileInput);
+  ): Promise<Profile> {
+    return await this.profileService.create(createProfileInput);
   }
 
-  @Query(() => [Profile], { name: 'profile' })
-  findAll() {
-    return this.profileService.findAll();
+  @Query(() => [Profile], { name: 'profiles' })
+  async findOneOrAll(
+    @Args('id', { type: () => Int, nullable: true }) id?: number,
+    @Args('email', { nullable: true }) email?: string,
+  ) {
+    return await this.profileService.findOneOrAll(id, email);
   }
 
   @Query(() => Profile, { name: 'profile' })
