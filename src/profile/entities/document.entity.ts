@@ -1,40 +1,31 @@
+import { Field, Int, ObjectType } from '@nestjs/graphql';
 import {
   Entity,
   Column,
   PrimaryGeneratedColumn,
   CreateDateColumn,
   UpdateDateColumn,
-  JoinColumn,
   ManyToOne,
+  JoinColumn,
 } from 'typeorm';
 import { Driver } from './driver.entity';
 
-@Entity({ name: 'vehicle' })
-export class Vehicle {
+@ObjectType()
+@Entity({ name: 'driver_document' })
+export class DriverDocument {
+  @Field(() => Int)
   @PrimaryGeneratedColumn()
   id: number;
 
-  @ManyToOne(() => Driver, (driver) => driver.vehicles)
+  @ManyToOne(() => Driver, (driver) => driver.documents)
   @JoinColumn()
   driver: Driver;
 
   @Column()
-  manufacturer: string;
+  name: string;
 
   @Column()
-  model_type: string;
-
-  @Column()
-  plate_number: string;
-
-  @Column()
-  color: string;
-
-  @Column()
-  chasis_number: string;
-
-  @Column()
-  year_of_make: string;
+  type: string;
 
   @CreateDateColumn({
     type: 'timestamp',

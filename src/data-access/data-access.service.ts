@@ -3,8 +3,7 @@ import { ConfigService } from '@nestjs/config';
 import { TypeOrmOptionsFactory, TypeOrmModuleOptions } from '@nestjs/typeorm';
 import { join } from 'path';
 import { parse } from 'pg-connection-string';
-import { Connection, EntitySchema } from 'typeorm';
-import { Driver } from './entities/driver.entity';
+import { Connection } from 'typeorm';
 
 @Injectable()
 export class TypeOrmService implements TypeOrmOptionsFactory {
@@ -25,26 +24,12 @@ export class TypeOrmService implements TypeOrmOptionsFactory {
       type: 'postgres',
       synchronize: this.envString(false, true),
       logging: false,
-      entities: [join(__dirname, '**', '*.entity.{ts,js}')],
-      migrations: [
-        this.envString(
-          'dist/data-access/migrations/**/*.js',
-          'src/data-access/migrations/**/*.ts',
-        ),
-      ],
+      entities: [join(global.appRoot, '**', '*.entity.{ts,js}')],
+      migrations: [join(global.appRoot, '**', 'migrations', '**', '*.{ts,js}')],
       cli: {
-        entitiesDir: this.envString(
-          'dist/data-access/entities',
-          'src/data-access/entities',
-        ),
-        migrationsDir: this.envString(
-          'dist/data-access/migrations',
-          'src/data-access/migrations',
-        ),
-        subscribersDir: this.envString(
-          'dist/data-access/subscribers',
-          'src/data-access/subscribers',
-        ),
+        entitiesDir: join(global.appRoot, '**', 'entities'),
+        migrationsDir: join(global.appRoot, '**', 'migrations'),
+        subscribersDir: join(global.appRoot, '**', 'subscribers'),
       },
       ...sslConfig,
     };

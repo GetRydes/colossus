@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { Driver } from 'src/data-access/entities/driver.entity';
+import { Driver } from './entities/driver.entity';
 import { CreateProfileInput } from './dto/create-profile.input';
 import { UpdateProfileInput } from './dto/update-profile.input';
 
@@ -16,22 +16,15 @@ export class ProfileService {
       createProfileInput;
 
     const driver = new Driver();
-    driver.first_name = firstName;
-    driver.last_name = lastName;
+    driver.firstName = firstName;
+    driver.lastName = lastName;
     driver.email = email;
+    driver.phoneNumber = phoneNumber;
     driver.password = password;
-    driver.phone_number = phoneNumber;
 
     const savedDriver = await this.driverRepository.save(driver);
 
-    return {
-      firstName: savedDriver.first_name,
-      email: savedDriver.email,
-      id: savedDriver.id,
-      lastName: savedDriver.last_name,
-      phoneNumber: savedDriver.phone_number,
-      isActive: savedDriver.is_active,
-    };
+    return savedDriver;
   }
 
   findAll(): Promise<Driver[]> {
@@ -47,9 +40,14 @@ export class ProfileService {
       return null;
     });
     if (Object.values(fields).length < 1) {
-      return this.driverRepository.find();
+      return this.driverRepository.find({
+        relations: ['vehicles', 'addresses'],
+      });
     }
-    return this.driverRepository.find({ where: { ...fields } });
+    return this.driverRepository.find({
+      where: { ...fields },
+      relations: ['vehicles', 'addresses'],
+    });
   }
 
   findOne(id: number) {

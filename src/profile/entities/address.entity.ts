@@ -1,3 +1,4 @@
+import { Field, Int, ObjectType } from '@nestjs/graphql';
 import {
   Entity,
   Column,
@@ -9,11 +10,14 @@ import {
 } from 'typeorm';
 import { Driver } from './driver.entity';
 
+@ObjectType()
 @Entity({ name: 'address' })
 export class DriverAddress {
+  @Field(() => Int)
   @PrimaryGeneratedColumn()
   id: number;
 
+  @Field(() => Driver)
   @ManyToOne(() => Driver, (driver) => driver.addresses)
   @JoinColumn()
   driver: Driver;

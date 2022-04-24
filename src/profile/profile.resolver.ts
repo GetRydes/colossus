@@ -1,45 +1,17 @@
-import { Resolver, Query, Mutation, Args, Int } from '@nestjs/graphql';
+import { Resolver, ResolveField, Parent } from '@nestjs/graphql';
 import { ProfileService } from './profile.service';
-import { Profile } from './models/profile.model';
-import { CreateProfileInput } from './dto/create-profile.input';
-import { UpdateProfileInput } from './dto/update-profile.input';
+import { Driver } from './entities/driver.entity';
+import { VehicleService } from 'src/vehicle/vehicle.service';
 
-@Resolver(() => Profile)
+@Resolver(() => Driver)
 export class ProfileResolver {
-  constructor(private readonly profileService: ProfileService) {}
+  constructor(
+    private readonly profileService: ProfileService,
+    private readonly vehicleService: VehicleService,
+  ) {}
 
-  @Mutation(() => Profile)
-  async createProfile(
-    @Args('createProfileInput') createProfileInput: CreateProfileInput,
-  ): Promise<Profile> {
-    return await this.profileService.create(createProfileInput);
-  }
-
-  @Query(() => [Profile], { name: 'profiles' })
-  async findOneOrAll(
-    @Args('id', { type: () => Int, nullable: true }) id?: number,
-    @Args('email', { nullable: true }) email?: string,
-  ) {
-    return await this.profileService.findOneOrAll(id, email);
-  }
-
-  @Query(() => Profile, { name: 'profile' })
-  findOne(@Args('id', { type: () => Int }) id: number) {
-    return this.profileService.findOne(id);
-  }
-
-  @Mutation(() => Profile)
-  updateProfile(
-    @Args('updateProfileInput') updateProfileInput: UpdateProfileInput,
-  ) {
-    return this.profileService.update(
-      updateProfileInput.id,
-      updateProfileInput,
-    );
-  }
-
-  @Mutation(() => Profile)
-  removeProfile(@Args('id', { type: () => Int }) id: number) {
-    return this.profileService.remove(id);
+  @ResolveField()
+  async vehicles(@Parent() driver: Driver) {
+    return await this.vehicleService.findOneOrAll({ driver: driver.id });
   }
 }

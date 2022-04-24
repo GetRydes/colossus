@@ -2,21 +2,62 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
-type Profile {
+type DriverAddress {
+  id: Int!
+  driver: Driver!
+}
+
+type DriverDocument {
+  id: Int!
+}
+
+type Vehicle {
+  id: Int!
+  driver: Driver!
+  manufacturer: String!
+  model_type: String!
+  plate_number: String!
+  color: String!
+  chasis_number: String!
+  year_of_make: String!
+  created_at: DateTime!
+  updated_at: DateTime!
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+type Driver {
   id: Int!
   firstName: String!
+  lastName: String!
   email: String!
+  password: String!
+  phoneNumber: String!
+  isActive: Boolean!
+  vehicles: [Vehicle]
+  documents: [DriverDocument!]!
+  addresses: [DriverAddress!]!
+  createdAt: DateTime!
+  updatedAt: DateTime!
 }
 
 type Query {
-  profiles(id: Int, email: String): [Profile!]!
-  profile(id: Int!): Profile!
+  profiles(id: Int, email: String): [Driver!]!
+  profile(id: Int!): Driver!
+  vehicles: [Vehicle!]!
+  vehicle(id: Int!): Vehicle
 }
 
 type Mutation {
-  createProfile(createProfileInput: CreateProfileInput!): Profile!
-  updateProfile(updateProfileInput: UpdateProfileInput!): Profile!
-  removeProfile(id: Int!): Profile!
+  createProfile(createProfileInput: CreateProfileInput!): Driver!
+  updateProfile(updateProfileInput: UpdateProfileInput!): Driver!
+  removeProfile(id: Int!): Driver!
+  createVehicle(createVehicleInput: CreateVehicleInput!): Vehicle!
+  updateVehicle(updateVehicleInput: UpdateVehicleInput!): Vehicle!
+  removeVehicle(id: Int!): Vehicle!
 }
 
 input CreateProfileInput {
@@ -33,5 +74,26 @@ input UpdateProfileInput {
   email: String
   password: String
   phoneNumber: String
+  id: Int!
+}
+
+input CreateVehicleInput {
+  driver: Int!
+  manufacturer: String!
+  model_type: String!
+  plate_number: String!
+  color: String!
+  chasis_number: String!
+  year_of_make: String!
+}
+
+input UpdateVehicleInput {
+  driver: Int
+  manufacturer: String
+  model_type: String
+  plate_number: String
+  color: String
+  chasis_number: String
+  year_of_make: String
   id: Int!
 }

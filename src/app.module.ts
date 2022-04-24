@@ -10,6 +10,8 @@ import { DataAccessModule } from './data-access/data-access.module';
 import { UtilsModule } from './utils/utils.module';
 import { ProfileModule } from './profile/profile.module';
 import { AuthModule } from './auth/auth.module';
+import { MailModule } from './mail/mail.module';
+import { VehicleModule } from './vehicle/vehicle.module';
 
 @Module({
   imports: [
@@ -22,6 +24,8 @@ import { AuthModule } from './auth/auth.module';
     }),
     ProfileModule,
     AuthModule,
+    MailModule,
+    VehicleModule,
   ],
   controllers: [AppController],
   providers: [AppService],
