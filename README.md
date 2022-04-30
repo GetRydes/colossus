@@ -4,7 +4,7 @@
 
 I've been going through Nest JS and built this as a quick way to get my hands dirty with it. I wanted a more fully fledged alternative to Express. Express always felt like a bunch of packages thrown together. Plus, I like the fact that is has first class Typescript support.
 
-It makes use of a MongoDB database while I am using Mongoose via the [@nestjs/mongoose](https://github.com/nestjs/mongoose '@nestjs/mongoose') wrapper as the ODM (Object Document Mapper) to interface with the underlying MongoDB collections. Its running on one of my side domains [https://rydes.ponnle.xyz](https://rydes.ponnle.xyz 'https://rydes.ponnle.xyz').
+It makes use of a PostgreSQL database while I am using TypeOrm via the [@nestjs/typeorm](https://github.com/nestjs/typeorm '@nestjs/typeorm') wrapper as the ORM (Object Relational Mapper) to interface with the underlying PostgreSQL database. Its running on one of my side domains [https://rydes.ponnle.xyz](https://rydes.ponnle.xyz 'https://rydes.ponnle.xyz').
 
 ## Installation
 
@@ -22,7 +22,7 @@ $ npm i
 $ npm run start:dev
 ```
 
-Navigate to http://localhost:1337/ to access the application.
+Navigate to http://localhost:3000/ to access the application.
 
 ### Build
 
@@ -45,11 +45,11 @@ This makes use of the development Dockerfile (Dockerfile.dev) as opposed to the 
 Create and run a Docker container based on the bookble image created with
 
 ```
-$ docker run -p 1337:1337 --name driver -d driver
+$ docker run -p 3000:3000 --name driver -d driver
 ```
 
-Once this is done, you can access the application via your local IP address on the 1337 port. So say your local IP address is http://192.168.43.127/, it would be available at http://192.168.43.127:1337. Its accessed on the 1337 port due to the port mapping specified with the docker run command. Run it on a different port of your choosing by simply specifying a different port after the -p option. So to run it on port 5000, it would simply be
+Once this is done, you can access the application via your local IP address on the 3000 port. So say your local IP address is http://192.168.43.127/, it would be available at http://192.168.43.127:3000. Its accessed on the 3000 port due to the port mapping specified with the docker run command. Run it on a different port of your choosing by simply specifying a different port after the -p option. So to run it on port 5000, it would simply be
 
 ```
-$ docker run -p 5000:1337 --name driver -d driver
+$ docker run -p 5000:3000 --name driver -d driver
 ```
