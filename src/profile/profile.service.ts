@@ -50,8 +50,23 @@ export class ProfileService {
     });
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} profile`;
+  findOne(id?: number, email?: string) {
+    const fields = { id, email };
+    Object.keys(fields).map((key) => {
+      if (!fields?.[key]) {
+        delete fields?.[key];
+      }
+      return null;
+    });
+    if (Object.values(fields).length < 1) {
+      return this.driverRepository.findOne({
+        relations: ['vehicles', 'addresses'],
+      });
+    }
+    return this.driverRepository.findOne({
+      where: { ...fields },
+      relations: ['vehicles', 'addresses'],
+    });
   }
 
   update(id: number, updateProfileInput: UpdateProfileInput) {

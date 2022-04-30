@@ -44,9 +44,15 @@ type Driver {
   updatedAt: DateTime!
 }
 
+type SignToken {
+  accessToken: String!
+  refreshToken: String!
+  driver: Driver!
+}
+
 type Query {
   profiles(id: Int, email: String): [Driver!]!
-  profile(id: Int!): Driver!
+  profile(id: Int!): Driver
   vehicles: [Vehicle!]!
   vehicle(id: Int!): Vehicle
 }
@@ -58,6 +64,9 @@ type Mutation {
   createVehicle(createVehicleInput: CreateVehicleInput!): Vehicle!
   updateVehicle(updateVehicleInput: UpdateVehicleInput!): Vehicle!
   removeVehicle(id: Int!): Vehicle!
+  signup(signUpInput: SignUpInput!): SignToken!
+  signin(email: String!, password: String!): SignToken!
+  logout: String!
 }
 
 input CreateProfileInput {
@@ -96,4 +105,12 @@ input UpdateVehicleInput {
   chasis_number: String
   year_of_make: String
   id: Int!
+}
+
+input SignUpInput {
+  firstName: String!
+  lastName: String!
+  email: String!
+  password: String!
+  phoneNumber: String!
 }

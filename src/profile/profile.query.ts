@@ -14,7 +14,7 @@ export class ProfileQueryResolver {
     return await this.profileService.findOneOrAll(id, email);
   }
 
-  @Query(() => Driver, { name: 'profile' })
+  @Query(() => Driver, { name: 'profile', nullable: true })
   findOne(@Args('id', { type: () => Int }) id: number) {
     return this.profileService.findOne(id);
   }

@@ -15,5 +15,6 @@ import { VehicleModule } from 'src/vehicle/vehicle.module';
     ProfileQueryResolver,
   ],
   imports: [TypeOrmModule.forFeature([Driver]), VehicleModule],
+  exports: [ProfileService],
 })
 export class ProfileModule {}
