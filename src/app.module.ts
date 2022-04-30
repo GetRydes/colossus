@@ -22,6 +22,7 @@ import { VehicleModule } from './vehicle/vehicle.module';
       driver: ApolloDriver,
       autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
       introspection: true,
+      playground: true,
     }),
     ProfileModule,
     AuthModule,
