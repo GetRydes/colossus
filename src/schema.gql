@@ -1,0 +1,116 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type DriverAddress {
+  id: Int!
+  driver: Driver!
+}
+
+type DriverDocument {
+  id: Int!
+}
+
+type Vehicle {
+  id: Int!
+  driver: Driver!
+  manufacturer: String!
+  model_type: String!
+  plate_number: String!
+  color: String!
+  chasis_number: String!
+  year_of_make: String!
+  created_at: DateTime!
+  updated_at: DateTime!
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+type Driver {
+  id: Int!
+  firstName: String!
+  lastName: String!
+  email: String!
+  password: String!
+  phoneNumber: String!
+  isActive: Boolean!
+  vehicles: [Vehicle]
+  documents: [DriverDocument!]!
+  addresses: [DriverAddress!]!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+type SignToken {
+  accessToken: String!
+  refreshToken: String!
+  driver: Driver!
+}
+
+type Query {
+  profiles(id: Int, email: String): [Driver!]!
+  profile(id: Int!): Driver
+  vehicles: [Vehicle!]!
+  vehicle(id: Int!): Vehicle
+}
+
+type Mutation {
+  createProfile(createProfileInput: CreateProfileInput!): Driver!
+  updateProfile(updateProfileInput: UpdateProfileInput!): Driver!
+  removeProfile(id: Int!): Driver!
+  createVehicle(createVehicleInput: CreateVehicleInput!): Vehicle!
+  updateVehicle(updateVehicleInput: UpdateVehicleInput!): Vehicle!
+  removeVehicle(id: Int!): Vehicle!
+  signup(signUpInput: SignUpInput!): SignToken!
+  signin(email: String!, password: String!): SignToken!
+  logout: String!
+}
+
+input CreateProfileInput {
+  firstName: String!
+  lastName: String!
+  email: String!
+  password: String!
+  phoneNumber: String!
+}
+
+input UpdateProfileInput {
+  firstName: String
+  lastName: String
+  email: String
+  password: String
+  phoneNumber: String
+  id: Int!
+}
+
+input CreateVehicleInput {
+  driver: Int!
+  manufacturer: String!
+  model_type: String!
+  plate_number: String!
+  color: String!
+  chasis_number: String!
+  year_of_make: String!
+}
+
+input UpdateVehicleInput {
+  driver: Int
+  manufacturer: String
+  model_type: String
+  plate_number: String
+  color: String
+  chasis_number: String
+  year_of_make: String
+  id: Int!
+}
+
+input SignUpInput {
+  firstName: String!
+  lastName: String!
+  email: String!
+  password: String!
+  phoneNumber: String!
+}

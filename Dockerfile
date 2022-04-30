@@ -2,11 +2,11 @@ FROM node:16-alpine AS production
 
 WORKDIR usr/src/app
 
-# RUN rm -rf build
+RUN rm -rf dist
 
 COPY package*.json ./
 
-RUN yarn add glob rimraf
+RUN npm install glob rimraf
 
 RUN npm install
 
