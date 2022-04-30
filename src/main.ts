@@ -9,6 +9,7 @@ async function bootstrap() {
   global.appRoot = resolve(__dirname);
 
   const app = await NestFactory.create(AppModule);
+  const __PORT__ = process.env.PORT || 3000;
 
   const config = new DocumentBuilder()
     .setTitle('Rydes Driver Service API')
@@ -20,6 +21,6 @@ async function bootstrap() {
   SwaggerModule.setup('docs', app, document);
 
   app.useGlobalPipes(new ValidationPipe({ whitelist: true }));
-  await app.listen(3000);
+  await app.listen(__PORT__);
 }
 bootstrap();
